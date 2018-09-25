@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:tns="http://www.example.org/CurrencyConvertor/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CurrencyConvertor" 
+  targetNamespace="http://www.example.org/CurrencyConvertor/">
+  
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/CurrencyConvertor/">
+      <xsd:element name="GetCurrencyRate">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="FromCurrency" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+          	<xsd:element name="Tocurrency" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+          	     <xsd:element name="Date" type="xsd:date" maxOccurs="1" minOccurs="1"></xsd:element>
+                    </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetCurrencyRateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Rate" type="xsd:double"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCurrencyRateRequest">
+    <wsdl:part element="tns:GetCurrencyRate" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="GetCurrencyRateResponse">
+    <wsdl:part element="tns:GetCurrencyRateResponse" name="body"/>
+  </wsdl:message>
+  <wsdl:portType name="CurrencyConvertor">
+    <wsdl:operation name="GetCurrencyRate">
+      <wsdl:input message="tns:GetCurrencyRateRequest"/>
+      <wsdl:output message="tns:GetCurrencyRateResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CurrencyConvertorSOAP" type="tns:CurrencyConvertor">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCurrencyRate">
+      <soap:operation soapAction="http://www.example.org/CurrencyConvertor/GetCurrencyRate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CurrencyConvertor">
+    <wsdl:port binding="tns:CurrencyConvertorSOAP" name="CurrencyConvertorSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
